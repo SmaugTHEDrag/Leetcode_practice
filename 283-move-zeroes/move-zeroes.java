@@ -6,12 +6,13 @@ class Solution {
         else {
             int count = 0;
             for(int i = 0; i<nums.length; i++){
-                if(nums[i] != 0){
-                    nums[count++] = nums[i];
+                if(nums[i]!=0){
+                    int swap = nums[i];
+                    nums[i] = nums[count];
+                    nums[count] = swap;
+                    count++;    
                 }
-            }
-            while(count<nums.length){
-                nums[count++] = 0;
+                
             }
         }
     }
