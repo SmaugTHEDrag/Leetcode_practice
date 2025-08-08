@@ -4,10 +4,9 @@ class Solution {
         int idx = 0;
         for(int i = 1; i<nums.length; i++){
             if(nums[i]==nums[i-1]){
-                idx++;
+                return true;
             }
         }
-        if(idx>0) return true;
-        else return false;
+        return false;
     }
 }
