@@ -1,63 +1,31 @@
 class Solution {
     public List<List<Integer>> fourSum(int[] nums, int target) {
-            int length = nums.length;
-        List<List<Integer>> result = new ArrayList<>();
-      
-        // Edge case: need at least 4 numbers
-        if (length < 4) {
-            return result;
-        }
-      
-        // Sort the array to enable two-pointer technique
         Arrays.sort(nums);
-      
-        // First number: iterate through possible first elements
-        for (int first = 0; first < length - 3; first++) {
-            // Skip duplicate values for the first number
-            if (first > 0 && nums[first] == nums[first - 1]) {
-                continue;
-            }
-          
-            // Second number: iterate through possible second elements
-            for (int second = first + 1; second < length - 2; second++) {
-                // Skip duplicate values for the second number
-                if (second > first + 1 && nums[second] == nums[second - 1]) {
-                    continue;
-                }
-              
-                // Two-pointer approach for the remaining two numbers
-                int left = second + 1;
-                int right = length - 1;
-              
-                while (left < right) {
-                    // Use long to prevent integer overflow
-                    long sum = (long) nums[first] + nums[second] + nums[left] + nums[right];
-                  
-                    if (sum < target) {
-                        // Sum is too small, move left pointer right
-                        left++;
-                    } else if (sum > target) {
-                        // Sum is too large, move right pointer left
-                        right--;
-                    } else {
-                        // Found a valid quadruplet
-                        result.add(List.of(nums[first], nums[second], nums[left], nums[right]));
-                        left++;
-                        right--;
-                      
-                        // Skip duplicate values for the third number
-                        while (left < right && nums[left] == nums[left - 1]) {
-                            left++;
-                        }
-                      
-                        // Skip duplicate values for the fourth number
-                        while (left < right && nums[right] == nums[right + 1]) {
-                            right--;
-                        }
+        List<List<Integer>> output = new ArrayList<>();
+        if(nums.length<4) return output;
+
+        for(int i = 0; i<nums.length-3; i++){
+            if(i > 0 && nums[i] == nums[i-1]) continue;
+
+            for(int j = i+1; j<nums.length-2; j++){
+                if(j > i+1 && nums[j] == nums[j-1]) continue;
+
+                int left = j+1;
+                int right = nums.length-1;
+                while(left<right){
+                    long sum = (long) nums[i]+nums[j]+nums[left]+nums[right];
+                    if(sum == target){
+                        output.add(List.of(nums[i], nums[j], nums[left], nums[right]));
+                        left ++;
+                        right --;
+                        while(left<right && nums[left] == nums[left-1]) left++;
+                        while(left<right && nums[right] == nums[right+1]) right--;
                     }
+                    else if(sum<target) left++;
+                    else right --;
                 }
             }
         }
-        return result;
+        return output;
     }
 }
